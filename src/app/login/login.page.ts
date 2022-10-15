@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NavController } from '@ionic/angular';
+import { AuthenticateService } from '../services/authenticate/authenticate.service';
+import { Storage } from '@ionic/storage-angular';
 
 @Component({
   selector: 'app-login',
@@ -7,9 +11,54 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginPage implements OnInit {
 
-  constructor() { }
+  loginForm!: FormGroup;
+  errorMessage = "";
 
-  ngOnInit() {
+  validationMessages = {
+    email: [
+      { type: 'required', message: 'El email es requerido' },
+      { type: 'email', message: 'Introduce un email válido' },
+    ],
+    password: [
+      { type: 'required', message: 'La contraseña es requerida' },
+      { type: 'minlength', message: 'La contraseña debe tener al menos 6 caracteres' }
+    ]
+  };
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private authService: AuthenticateService,
+    private navCtrl: NavController,
+    private storage: Storage
+  ) {
+    this.buildLoginForm();
+  }
+  
+  ngOnInit() {}
+
+  buildLoginForm() {
+    this.loginForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+    });
+  }
+
+  loginUser(credentials) {
+    this.authService.loginUser(credentials).then(() => {
+      this.errorMessage = "";
+      this.storage.set('isUserLoggedIn', true);
+      this.navCtrl.navigateForward('/home');
+    }).catch((error) => {
+      this.errorMessage = error;
+    });
+  }
+
+  get email() {
+    return this.loginForm.get('email');
+  }
+
+  get password() {
+    return this.loginForm.get('password');
   }
 
 }
