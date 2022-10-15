@@ -53,6 +53,10 @@ export class LoginPage implements OnInit {
     });
   }
 
+  goToRegister() {
+    this.navCtrl.navigateForward('/register')
+  }
+
   get email() {
     return this.loginForm.get('email');
   }
