@@ -31,6 +31,7 @@ export class LoginPage implements OnInit {
     private navCtrl: NavController,
     private storage: Storage
   ) {
+    this.storage.create();
     this.buildLoginForm();
   }
   

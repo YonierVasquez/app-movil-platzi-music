@@ -25,3 +25,11 @@
 #container a {
   text-decoration: none;
 }
+
+ion-avatar {
+  height: 110px;
+
+  & span {
+    font-size: 12px;
+  }
+}
