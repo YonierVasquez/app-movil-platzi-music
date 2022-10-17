@@ -11,7 +11,7 @@ export class MenuPage implements OnInit {
 
   constructor(
     private menuController: MenuController,
-    private navCtl: NavController,
+    private navCtrl: NavController,
     private storage: Storage
   ) { }
 
@@ -24,7 +24,11 @@ export class MenuPage implements OnInit {
 
   logoutUser() {
     this.storage.set('isUserLoggedIn', false);
-    this.navCtl.navigateRoot('/login');
+    this.navCtrl.navigateRoot('/login');
+  }
+
+  goToSettings() {
+    this.navCtrl.navigateRoot("menu/settings");
   }
 
 }
