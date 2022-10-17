@@ -29,6 +29,10 @@
 ion-avatar {
   height: 120px;
   width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
 
   & img {
     width: 90px;
@@ -37,6 +41,7 @@ ion-avatar {
 
   & span {
     font-size: 12px;
+    margin-top: 8px;
   }
 }
 

@@ -14,10 +14,11 @@ export class HomePage {
   albums: any[] = [];
   songs: any[] = [];
 
+  song: any = {};
+
   slideOpts = {
     initialSlide: 6,
     slidesPerView: 4,
-    centeredSlides: true,
     speed: 400
   };
 
@@ -41,11 +42,23 @@ export class HomePage {
     const modal = await this.modalController.create({
       component: SongsModalPage,
       componentProps: {
-        songs: songs.tacks,
+        songs: songs.tracks,
         artist: artist.name
       }
     });
+
+    modal.onDidDismiss().then(dataRetuned => {
+      this.song = dataRetuned.data;
+    });
+
     return await modal.present();
+  }
+
+  play() {
+    this.song.playing = true;
+  }
+  pause() {
+    this.song.playing = false;
   }
 
 }
