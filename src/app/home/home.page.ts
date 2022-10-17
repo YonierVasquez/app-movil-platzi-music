@@ -16,6 +16,9 @@ export class HomePage {
 
   song: any = {};
 
+  currentSong: any = {};
+  newTime;
+
   slideOpts = {
     initialSlide: 6,
     slidesPerView: 4,
@@ -55,10 +58,32 @@ export class HomePage {
   }
 
   play() {
+    this.currentSong = new Audio(this.song.preview_url);
+    this.currentSong.play();
+    this.currentSong.addEventListener("timeupdate", () => {
+      this.newTime =
+        (this.currentSong.currentTime * (this.currentSong.duration / 10)) / 100;
+    });
     this.song.playing = true;
   }
   pause() {
+    this.currentSong.pause();
     this.song.playing = false;
+  }
+
+  parseTime(time = "0.00") {
+    if (time) {
+      const partTime = parseInt(time.toString().split(".")[0], 10);
+      let minutes = Math.floor(partTime / 60).toString();
+      if (minutes.length == 1) {
+        minutes = "0" + minutes;
+      }
+      let seconds = (partTime % 60).toString();
+      if (seconds.length == 1) {
+        seconds = "0" + seconds;
+      }
+      return minutes + ":" + seconds;
+    }
   }
 
 }

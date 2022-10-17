@@ -30,7 +30,7 @@
   </ion-slides>
 
   <!-- Canciones -->
-  <h1>Albunes</h1>
+  <h1>Albums</h1>
   <ion-slides [options]="slideOpts">
     <ion-slide *ngFor="let song of songs">
       <ion-avatar>
@@ -39,18 +39,20 @@
       </ion-avatar>
     </ion-slide>
   </ion-slides>
-
-  <!--  -->
 </ion-content>
 
 <ion-footer>
   <ion-grid>
     <ion-row>
-      <ion-col class="ion-text-start">0:00</ion-col>
-      <ion-col class="ion-text-end">0:00</ion-col>
+      <ion-col class="ion-text-start"
+        >{{ parseTime(currentSong.currentTime) || "0:00" }}</ion-col
+      >
+      <ion-col class="ion-text-end"
+        >{{ parseTime(currentSong.duration) || "0:00" }}</ion-col
+      >
     </ion-row>
   </ion-grid>
-  <ion-progress-bar [value]="0.5"></ion-progress-bar>
+  <ion-progress-bar [value]="newTime"></ion-progress-bar>
   <ion-grid>
     <ion-row>
       <ion-col size="1">
